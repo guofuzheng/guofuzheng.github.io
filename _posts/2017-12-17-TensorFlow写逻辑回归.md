@@ -7,7 +7,8 @@ author:     GFZ                     # 作者
 header-img: img/post-bg-unix-linux.jpg    #这篇文章标题背景图片
 catalog: true                       # 是否归档
 tags:                               #标签
-    - 机器学习  - TensorFlow
+    - 机器学习  
+    - TensorFlow
 ---
 # 前言
 TensorFlow现在贼火，所以我就尝试着用TensorFlow去写一个拟合y = 0.3*x+0.1的代码。
