@@ -1,10 +1,10 @@
 ---
 layout:     post                    # 使用的布局（不需要改）
-title:      利用TensorFlow手写数字识别               # 标题 
-subtitle:   利用TensorFlow手写数字识别 #副标题
+title:      CNN利用TensorFlow手写数字识别               # 标题 
+subtitle:   CNN利用TensorFlow手写数字识别 #副标题
 date:       2018-01-07            # 时间
 author:     GFZ                     # 作者
-header-img: img/post-bg-unix-linux.jpg    #这篇文章标题背景图片
+header-img: img/post-bg-ioses.jpg    #这篇文章标题背景图片
 catalog: true                       # 是否归档
 tags:                               #标签
     - 机器学习
