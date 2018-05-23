@@ -32,7 +32,6 @@ weight_1 = Lambda(lambda x:x*0.8)
 weight_2 = Lambda(lambda x:x*0.2)
 weight_gru1 = weight_1(gru1)
 weight_gru2 = weight_2(gru2)
-fuse = Lambda(lambda x:add(inputs=[x[0],x[1]]))
-last = fuse([weight_gru1,weight_gru2])
+last = Add()([weight_gru1,weight_gru2])
  ```
  这样就没问题了。
