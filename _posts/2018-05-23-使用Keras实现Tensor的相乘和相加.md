@@ -13,7 +13,7 @@ tags:                               #标签
 # 前言
 最近在写行为识别的代码，涉及到两个网络的融合，这个融合是有加权的网络结果的融合，所以需要对网络的结果进行加权（相乘）和融合（相加）。
 # 最初的想法
-最初的想法是用Keras.layers.Add和Keras.layers.Multiplt来做，后来发现这样会报错。
+最初的想法是用Keras.layers.Add和Keras.layers.Multiply来做，后来发现这样会报错。
 ```
 rate_rgb = k.variable(np.ones((1024,),dtype='float32')*0.8)
 rate_esti = k.variable(np.ones((1024,),dtype='float32')*0.2)
