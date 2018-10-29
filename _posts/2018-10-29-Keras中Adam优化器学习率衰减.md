@@ -19,5 +19,5 @@ if self.initial_decay > 0:
             lr *= (1. / (1. + self.decay * K.cast(self.iterations,
                                                   K.dtype(self.decay))))
 ```
-就是更新方式是 lr=1/(1+decay x teration) x lr
+就是更新方式是 lr=1/(1+decay x iteration) x lr
 所以，如果跑100个epoch，我觉得最好设置大于0.01，不然我感觉没什么效果。
