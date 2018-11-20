@@ -4,7 +4,7 @@ title:      Keras 中 call_back的设置              # 标题
 subtitle:   Keras 中 call_back的设置   #副标题
 date:       2018-11-20           # 时间
 author:     GFZ                     # 作者
-header-img: img/post-bg-coffee.jpg    #这篇文章标题背景图片
+header-img: img/post-bg-coffee.jpeg    #这篇文章标题背景图片
 catalog: true                       # 是否归档
 tags:                               #标签
     - Keras
