@@ -24,3 +24,41 @@ tags:                               #标签
 ### 3、关于Mapper的无法注入的问题
 
 在编写数据库查询的Mapper时，需要在该类上加上注解@Mapper，告诉这个类是Mapper。
+### 4、Mybatis遇到No constructor found in ....的解决方法
+在使用mybatis时，偶尔遇到了“No constructor found in .....”的问题，根据问题的提示可以看出，应该是构造方法引起的异常，经测试，当引用的实体重构了构造方法之后就会出现这个问题，因为mybatis需要用到默认构造方法，明确一个默认构造方法即可解决。
+错误代码：
+```java
+public class Employee {
+    private Integer EmployeeId;
+    private String LastName;
+    private String email;
+    private Integer gender;
+    private Integer DepartmentId;
+    public Employee(Integer employeeId, String lastName, String email, Integer gender, Integer departmentId) {
+        EmployeeId = employeeId;
+        LastName = lastName;
+        this.email = email;
+        this.gender = gender;
+        DepartmentId = departmentId;
+    }
+}
+```
+正确代码：
+```java
+public class Employee {
+    private Integer EmployeeId;
+    private String LastName;
+    private String email;
+    private Integer gender;
+    private Integer DepartmentId;
+    public  Employee(){
+        super();
+    }
+    public Employee(Integer employeeId, String lastName, String email, Integer gender, Integer departmentId) {
+        EmployeeId = employeeId;
+        LastName = lastName;
+        this.email = email;
+        this.gender = gender;
+        DepartmentId = departmentId;
+    }
+```
