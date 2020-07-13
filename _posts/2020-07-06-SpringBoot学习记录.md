@@ -62,3 +62,8 @@ public class Employee {
         DepartmentId = departmentId;
     }
 ```
+### 5、@RestControllerAdvice和@ControllerAdvice的区别
+我自己的实验结果是@ControllerAdvice会返回定制的错误的页面，但是@RestControllerAdvice则会返回JSON数据。应该是与@RestController和@Controller的区别差不多。
+### 5、@RestControllerAdvice和@ControllerAdvice的区别自己
+### 5、@RestControllerAdvice和@ControllerAdvice的区别的
+### 5、@RestControllerAdvice和@ControllerAdvice的区别
