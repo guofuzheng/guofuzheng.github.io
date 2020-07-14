@@ -64,6 +64,21 @@ public class Employee {
 ```
 ### 5、@RestControllerAdvice和@ControllerAdvice的区别
 我自己的实验结果是@ControllerAdvice会返回定制的错误的页面，但是@RestControllerAdvice则会返回JSON数据。应该是与@RestController和@Controller的区别差不多。
-### 5、@RestControllerAdvice和@ControllerAdvice的区别自己
-### 5、@RestControllerAdvice和@ControllerAdvice的区别的
-### 5、@RestControllerAdvice和@ControllerAdvice的区别
+### 6、在处理消息时，监听和发送有可能会出现监听接收不到的情况
+之前遇到这个问题，是因为发送的一个自己新建的实体类，发送过去但是接收不到。在加入自定义的序列化方法后，解决这个问题。
+```java
+package com.guo.springbootamqp.config;
+
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MyAMQPConfig {
+    @Bean
+    public MessageConverter messageConverter(){
+        return new Jackson2JsonMessageConverter();
+    }
+}
+```
