@@ -82,3 +82,20 @@ public class MyAMQPConfig {
     }
 }
 ```
+### 7、class path contains multiple SLF4J bindings
+这是因为依赖中有多个SLF4J，导致的问题，所以排除多余的依赖就可以了，之前遇到的是
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-log4j2</artifactId>
+</dependency>
+```
+和
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+```
+
+这两个冲突，去掉了log4j2就好了，可能后面还是会有问题，先这么记录。
