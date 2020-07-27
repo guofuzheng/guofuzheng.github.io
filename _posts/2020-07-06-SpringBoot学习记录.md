@@ -14,6 +14,11 @@ tags:                               #标签
 ### 1 页面无法访问404
 
 如果页面都放在Resources中，但是页面就是一直无法访问，有可能是没有引入模板引擎。
+如果引入模板引擎后，还是页面报404的错误，页面无法访问，有可能是静态资源被拦截了。
+在application.properties中加入
+```java
+spring.resources.static-locations=classpath:templates(classpath:static)
+```
 
 ### 2 @Controller和@RestController的区别
 
