@@ -20,7 +20,7 @@ Docker是现在比较火的一个工具，简单的来说就是把你需要的�
 
 ```shell
 docker search mariadb
-docker install mariadb
+docker pull mariadb
 ```
 
 等待Pull完就可以了。
