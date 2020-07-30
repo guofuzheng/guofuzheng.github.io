@@ -117,7 +117,7 @@ xml写法：
             </foreach>
 </insert>
 ```
-> 这里的collection可以选择list或者collection，但是进行选择list。
+> 这里的collection可以选择list或者collection，但是进行选择list。  
 mapper写法：
 ```java
 public Integer addUserBatch(List<UserEntity> userEntityList);
