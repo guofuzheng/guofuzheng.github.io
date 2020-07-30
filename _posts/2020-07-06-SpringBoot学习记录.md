@@ -105,4 +105,47 @@ public class MyAMQPConfig {
 
 这两个冲突，去掉了log4j2就好了，可能后面还是会有问题，先这么记录。
 ### 8、在注册Service上启用缓存，并以UserName作为键值会出现同名的无法注册
-这个问题暂时还没解决，后期再考虑。
+这个问题我的想法是，在我操作的时候，是因为把数据库里的数据删掉了，然后缓存里面的没有删除，所以redis缓存就认为数据已经存在数据库里了，就不在执行数据库的操作，所以在注册时，数据库不会新增记录。
+### 9、mybatis批量添加
+xml写法：
+```xml
+<insert id="addUserBatch" useGeneratedKeys="true" parameterType="java.util.List">
+        INSERT INTO userTable(userNickname,userPassword)
+        VALUES
+            <foreach collection="list" index="index" item="user" separator=",">
+                (#{user.userNickname},#{user.userPassword})
+            </foreach>
+</insert>
+```
+> 这里的collection可以选择list或者collection，但是进行选择list。
+mapper写法：
+```java
+public Integer addUserBatch(List<UserEntity> userEntityList);
+```
+service写法：
+```java
+public Integer addUserBatch(List<UserEntity> userEntityList){
+        Integer flag = userMapper.addUserBatch(userEntityList);
+        return flag;
+    }
+```
+controller写法：
+```java
+public Integer addUserBatch(@RequestBody List<UserEntity> userEntityList){
+        Integer flag = userService.addUserBatch(userEntityList);
+        return flag;
+    }
+```
+其中，在使用postman发送请求的时候，填好请求路径，然后在body中选择raw，选择JSON格式，输入JSON数据：
+```json
+[
+{
+"userNickname":"zhangsan",
+"userPassword":"123456"
+},
+{
+"userNickname":"lisi",
+"userPassword":"123456"
+}
+]
+```
