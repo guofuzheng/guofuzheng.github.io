@@ -161,5 +161,5 @@ String updateJSON = JSON.toJSONString(updateGroupExternalEntity);
 关于解析JSON可以使用如下:
 ```java
 JSONObject testObject = JSONObject.parseObject(test);
-return testObject.getString("userNickname");
+return testObject.getString("beforeUpdateGroupname");
 ```
