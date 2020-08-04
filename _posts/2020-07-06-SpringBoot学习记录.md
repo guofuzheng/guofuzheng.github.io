@@ -150,3 +150,16 @@ public Integer addUserBatch(@RequestBody List<UserEntity> userEntityList){
 }
 ]
 ```
+###  10、spring boot中JSON的创建于解析
+可以使用fastjson这个包,关于创建一个对象的JSON,可以如下操作:
+```java
+UpdateGroupExternalEntity updateGroupExternalEntity = new UpdateGroupExternalEntity();
+updateGroupExternalEntity.setBeforeUpdateGroupname("test1");
+updateGroupExternalEntity.setAfterUpdateGroupname("test2");
+String updateJSON = JSON.toJSONString(updateGroupExternalEntity);
+```
+关于解析JSON可以使用如下:
+```java
+JSONObject testObject = JSONObject.parseObject(test);
+return testObject.getString("userNickname");
+```
