@@ -163,3 +163,36 @@ String updateJSON = JSON.toJSONString(updateGroupExternalEntity);
 JSONObject testObject = JSONObject.parseObject(test);
 return testObject.getString("beforeUpdateGroupname");
 ```
+### 11、关于Jaskson序列与反序列化Redis存取
+```java
+@PostMapping("listserialize")
+    public String insertListSerialize() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<String> stringList = new ArrayList<>();
+        stringList.add("xulu");
+        stringList.add("guofuzheng");
+        stringList.add("zhangtao");
+        stringList.add("yuanwei");
+        stringList.add("zouping");
+        stringList.add("shimengye");
+        try{
+            String test = objectMapper.writeValueAsString(stringList);
+            redisTemplate.opsForValue().set("listserialize",test);
+            return test;
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+            return "";
+        }
+    }
+    @GetMapping("listdeserialize")
+    public void getListSerialize(){
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String json = (String) redisTemplate.opsForValue().get("listserialize");
+            List<String> stringList = objectMapper.readValue(json, List.class);
+            System.out.println(stringList);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+```
