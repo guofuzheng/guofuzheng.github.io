@@ -184,12 +184,44 @@ return testObject.getString("beforeUpdateGroupname");
             return "";
         }
     }
-    @GetMapping("listdeserialize")
+@GetMapping("listdeserialize")
     public void getListSerialize(){
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             String json = (String) redisTemplate.opsForValue().get("listserialize");
             List<String> stringList = objectMapper.readValue(json, List.class);
+            System.out.println(stringList);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+```
+上面的是关于String类型的序列化与反序列化，存入redis中，如果存入的是实体对象的List，那么类似的就可以改为：
+```java
+    @PostMapping("/listserialize")
+    public String insertListSerialize() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        StudentEntity studentEntity1 = new StudentEntity(1,"guo",100.0);
+        StudentEntity studentEntity2 = new StudentEntity(2,"sun",100.0);
+        List<StudentEntity> studentEntities = new ArrayList<>();
+        studentEntities.add(studentEntity1);
+        studentEntities.add(studentEntity2);
+        try{
+            System.out.println(studentEntities);
+            String test = objectMapper.writeValueAsString(studentEntities);
+            redisTemplate.opsForValue().set("studentserialize",test);
+            return test;
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+            return "";
+        }
+    }
+    @GetMapping("/listdeserialize")
+    public void getListSerialize(){
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String json = (String) redisTemplate.opsForValue().get("studentserialize");
+            List<StudentEntity> stringList = objectMapper.readValue(json, List.class);
             System.out.println(stringList);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
