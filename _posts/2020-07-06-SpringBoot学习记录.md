@@ -228,3 +228,29 @@ return testObject.getString("beforeUpdateGroupname");
         }
     }
 ```
+### 12、关于使用jackson处理实体对象
+如果需要在读取json后对，如果json是List<class>，需要对List中的对象进行操作，那么就需要下面的写法。
+```java
+public void test(){
+        StudentEntity studentEntity1 = new StudentEntity(1,"guo",100.0);
+        StudentEntity studentEntity2 = new StudentEntity(2,"sun",100.0);
+        List<StudentEntity> studentEntities = new ArrayList<>();
+        studentEntities.add(studentEntity1);
+        studentEntities.add(studentEntity2);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String studentEntitiesJson = objectMapper.writeValueAsString(studentEntities);
+            List<StudentEntity> stringList = objectMapper.readValue(studentEntitiesJson,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, StudentEntity.class));
+            System.out.println("listener");
+            System.out.println(stringList);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+```
+`在使用jackson处理实体对象时，需要该实体类中有无参构造器，否则无法完成正常的转换。`不然会报类似下面的错误：
+```
+com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Cannot construct instance of `com.guo.redis.Entity.StudentEntity` (no Creators, like default constructor, exist): cannot deserialize from Object value (no delegate- or property-based Creator)
+ at [Source: (String)"[{"studentId":1,"studentName":"guo","studentScore":100.0},{"studentId":2,"studentName":"sun","studentScore":100.0}]"; line: 1, column: 3] (through reference chain: java.util.ArrayList[0])
+```
