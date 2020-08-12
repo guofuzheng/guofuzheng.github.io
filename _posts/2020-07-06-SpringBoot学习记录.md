@@ -254,3 +254,58 @@ public void test(){
 com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Cannot construct instance of `com.guo.redis.Entity.StudentEntity` (no Creators, like default constructor, exist): cannot deserialize from Object value (no delegate- or property-based Creator)
  at [Source: (String)"[{"studentId":1,"studentName":"guo","studentScore":100.0},{"studentId":2,"studentName":"sun","studentScore":100.0}]"; line: 1, column: 3] (through reference chain: java.util.ArrayList[0])
 ```
+### 13、关于RabbitMQ的使用
+1. 先设置MessageConverter
+    ```java
+    package com.guo.redis.Config;
+
+    import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+    import org.springframework.amqp.rabbit.core.RabbitTemplate;
+    import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.context.annotation.Configuration;
+
+    @Configuration
+    public class MyAMQPConfig {
+        @Bean
+        public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+            RabbitTemplate template = new RabbitTemplate(connectionFactory);
+            template.setMessageConverter(new Jackson2JsonMessageConverter());
+            return template;
+        }
+    }
+    ```
+2. 设置发送者
+```java
+@RestController
+public class RabbitMqController {
+    @Autowired
+    RabbitTemplate rabbitTemplate;
+    @GetMapping("/rabbit/send")
+    public void sendGuo(){
+        StudentEntity studentEntity1 = new StudentEntity(1,"guo",100.0);
+        StudentEntity studentEntity2 = new StudentEntity(2,"sun",100.0);
+        List<StudentEntity> studentEntities = new ArrayList<>();
+        studentEntities.add(studentEntity1);
+        studentEntities.add(studentEntity2);
+        rabbitTemplate.convertAndSend("exchange.topic","guo",studentEntities);
+    }
+}
+```
+3. 搞定消费者
+```java
+@Component
+public class RabbitMQListener {
+    @RabbitListener(queues = "guo")
+    public void getGuo(Message message)  {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            List<StudentEntity> studentEntityList = objectMapper.readValue(new String(message.getBody()), objectMapper.getTypeFactory().constructCollectionType(List.class, StudentEntity.class));
+            System.out.println("queue:guo->"+  studentEntityList);
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+    }
+}
+```
+> message.getBody()是Byte[]数组类型的，在形参里设置String message也可以直接接受数据就是像这样`public void getGuo(String message){}`   
