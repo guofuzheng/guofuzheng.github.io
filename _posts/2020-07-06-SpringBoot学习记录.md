@@ -309,3 +309,66 @@ public class RabbitMQListener {
 }
 ```
 > message.getBody()是Byte[]数组类型的，在形参里设置String message也可以直接接受数据就是像这样`public void getGuo(String message){}`   
+### 14、关于Swagger2的使用   
+在安装Swagger后，需要相关配置，同时还要防止拦截器拦截页面造成404，配置类可以类似于下面的写法：
+```java
+package com.guo.mypost7.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.Contact;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@Configuration
+@EnableSwagger2
+public class MySwaggerConfig extends WebMvcConfigurationSupport {
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
+    @Bean
+    public Docket MyPostApi(){
+        return new Docket(DocumentationType.SWAGGER_2).apiInfo(new ApiInfoBuilder()
+                        .title("Post社交平台接口说明文档")
+                        .description("这是Post社交平台接口说明文档的描述")
+                        .contact(new Contact("guofuzheng","guofuzheng.gitee.io","guofuzheng@foxmail.com"))
+                        .version("版本号：V1.0")
+                        .build())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.guo.mypost7"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+}
+
+```
+> 其中，`addResourceHandlers`是为了防止拦截器拦截swagger页面配置的。因此配置类需要继承WebMvcConfigurationSupport。   
+`这里面还有个问题，如果在Spring boot1.5.12中WebMvcConfigurerAdapter()配置了拦截器会导致/无法访问，原因不详`   
+原因已经找到了：在定义Swagger的时候，可以不需要增加资源路径。就是像这样写：
+```java
+@Configuration
+@EnableSwagger2
+public class MySwaggerConfig{
+    @Bean
+    public Docket MyPostApi(){
+        return new Docket(DocumentationType.SWAGGER_2).apiInfo(new ApiInfoBuilder()
+                        .title("Post社交平台接口说明文档")
+                        .description("这是Post社交平台接口说明文档的描述")
+                        .contact(new Contact("guofuzheng","guofuzheng.gitee.io","guofuzheng@foxmail.com"))
+                        .version("版本号：V1.0")
+                        .build())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.guo.mypost7"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+}
+```
