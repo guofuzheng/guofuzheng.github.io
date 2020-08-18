@@ -351,9 +351,10 @@ public class MySwaggerConfig extends WebMvcConfigurationSupport {
 }
 
 ```
-> 其中，`addResourceHandlers`是为了防止拦截器拦截swagger页面配置的。因此配置类需要继承WebMvcConfigurationSupport。   
+其中，`addResourceHandlers`是为了防止拦截器拦截swagger页面配置的。因此配置类需要继承WebMvcConfigurationSupport。   
 `这里面还有个问题，如果在Spring boot1.5.12中WebMvcConfigurerAdapter()配置了拦截器会导致/无法访问，原因不详`   
-原因已经找到了：在定义Swagger的时候，可以不需要增加资源路径。就是像这样写：
+原因已经找到了：在定义Swagger的时候，可以不需要增加资源路径。就是像这样写：   
+
 ```java
 @Configuration
 @EnableSwagger2
