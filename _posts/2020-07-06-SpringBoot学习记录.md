@@ -308,7 +308,7 @@ public class RabbitMQListener {
     }
 }
 ```
-> message.getBody()是Byte[]数组类型的，在形参里设置String message也可以直接接受数据就是像这样`public void getGuo(String message){}`   
+message.getBody()是Byte[]数组类型的，在形参里设置String message也可以直接接受数据就是像这样`public void getGuo(String message){}`   
 ### 14、关于Swagger2的使用   
 在安装Swagger后，需要相关配置，同时还要防止拦截器拦截页面造成404，配置类可以类似于下面的写法：
 ```java
