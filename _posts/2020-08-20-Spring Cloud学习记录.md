@@ -11,8 +11,7 @@ tags:                               #标签
 
 ---   
 ### OpenFeign的调用格式
-OpenFeign主要是面向接口的服务调用，就是说在服务提供方的接口是啥，他就在service定义一个接口，添加上FeignClient注解，在Controller里就可以调用了，但是有几点需要注意：1. 定义OpenFeign接口时需要加上
-服务方的调用接口，同时有参数的需要PathVariable。2. FeignClient中的就是服务方的服务名  
+OpenFeign主要是面向接口的服务调用，就是说在服务提供方的接口是啥，他就在service定义一个接口，添加上FeignClient注解，在Controller里就可以调用了，但是有几点需要注意：1. 定义OpenFeign接口时需要加上服务方的调用接口，同时有参数的需要PathVariable。2. FeignClient中的就是服务方的服务名。3. 其实调用方的service里调用的其实是服务方的Controller里的方法。  
 调用方的service书写方式如下：
 ```java
 package org.example.springcloud.service;
