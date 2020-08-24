@@ -374,3 +374,28 @@ public class MySwaggerConfig{
     }
 }
 ```
+### 15、关于Mybatis Plus中主键设置空插入不了
+在使用PostgreSQL和Mybatis Plus结合时，出现了不设置表主键无法插入的情况。这种问题可以在表实体类中的`@TableId()`设置，具体如下：
+```java
+@TableId(type = IdType.AUTO) 主键自增 数据库中需要设置主键自增
+private Long id;
+@TableId(type = IdType.NONE) 默认 跟随全局策略走
+private Long id;
+@TableId(type = IdType.UUID) UUID类型主键
+private Long id;
+@TableId(type = IdType.ID_WORKER) 数值类型  数据库中也必须是数值类型 否则会报错
+private Long id;
+@TableId(type = IdType.ID_WORKER_STR) 字符串类型   数据库也要保证一样字符类型
+private Long id;
+@TableId(type = IdType.INPUT) 用户自定义了  数据类型和数据库保持一致就行
+private Long id;
+```
+同时也可以在`application.yml`中设置：
+```yml
+mybatis-plus:
+  mapper-locations:
+    - com/mp/mapper/*
+  global-config:
+    db-config:
+      id-type: uuid/none/input/id_worker/id_worker_str/auto   表示全局主键都采用该策略
+```
