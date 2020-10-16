@@ -93,7 +93,7 @@ public interface HelloService {
 
 ```
 
-> 这里有几个注意点，@WebService和@WebMethod两个注解不能忘记，同时，@WebService中的参数也不能忘记，关于targetNamespace中的，我的理解时返回参数的包空间，如果返回的是实体对象，而不是简单的字符串，那么就需要指向实体对象的包空间，就是entity.example.org，如果指向service.example.org，在结果输出的时候只能输出结果的内存那种数据，不能完整的显示实体对象的数据，而且不能转换类型。  
+> 这里有几个注意点，@WebService和@WebMethod两个注解不能忘记，同时，@WebService中的参数也不能忘记，关于targetNamespace中的，我的理解是返回参数的包空间，如果返回的是实体对象，而不是简单的字符串，那么就需要指向实体对象的包空间，就是entity.example.org，如果指向service.example.org，在结果输出的时候只能输出结果的内存那种数据，不能完整的显示实体对象的数据，而且不能转换类型。  
 
 ### 方法实现
 
@@ -123,7 +123,7 @@ public class HelloServiceImpl implements HelloService {
 
 ```
 
-> 这里的注意点主要是在@WebService中的name和接口中的一直，targetNamespace也需要一致，enpointInterface则需要指向实现的接口。
+> 这里的注意点主要是在@WebService中的name和接口中的一致，targetNamespace也需要一致，enpointInterface则需要指向实现的接口。
 
 ### 发布
 
