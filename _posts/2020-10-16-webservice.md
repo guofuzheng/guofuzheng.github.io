@@ -187,7 +187,7 @@ public class Test {
 
 ```
 
-> JaxWsDynamicClientFactory在我看来主要是定义一个工厂，然后拆功能键连接，最后在invoke中调用方法，invoke(方法名，参数)。client.invoke()返回的就是一个对象数组。
+> JaxWsDynamicClientFactory在我看来主要是定义一个工厂，然后创建连接，最后在invoke中调用方法，invoke(方法名，参数)。client.invoke()返回的就是一个对象数组。
 
 至此调用完成。
 
